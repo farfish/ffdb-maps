@@ -62,7 +62,11 @@ function(input, output, session) {
 
   observe({
     ve <- visible_effort()
-    pal <- colorFactor("inferno", ve$flag)
+    pal <- rep(c(brewer.pal(12, "Paired"),
+                 brewer.pal(9, "Set1"),
+                 brewer.pal(8, "Set2"),
+                 brewer.pal(12, "Set3")), 10)
+    pal <- colorFactor(pal, ve$flag)
 
     leafletProxy("map", data = ve) %>%
         clearMarkers() %>%
