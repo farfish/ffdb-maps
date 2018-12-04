@@ -57,7 +57,7 @@ function(input, output, session) {
                     brewer.pal(12, "Set3")), 10)
 
   output$map <- renderLeaflet({
-    leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
+    leaflet(options = leafletOptions(zoomControl = TRUE)) %>%
       addTiles(
         urlTemplate = "//server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         attribution = paste(
@@ -74,10 +74,11 @@ function(input, output, session) {
 
     leafletProxy("map", data = ve) %>%
         clearMarkers() %>%
-        addCircleMarkers(~lon_bin, ~lat_bin, radius=~fishing_hours,
-            stroke=FALSE, fillOpacity=~day_ratio, fillColor=pal(ve$flag)) %>%
-        addLegend("bottomleft", pal=pal, values=~flag, title="Flag",
-            layerId="colorLegend")
+        addCircleMarkers(~lon_bin, ~lat_bin, radius=~fishing_hours, group=~paste0('<span style="color: ', pal(flag), '">', flag, '</span>'),
+            stroke=FALSE, fillOpacity=~day_ratio, fillColor=~pal(flag), popup=~flag,
+            options = pathOptions(className=~paste0("flag-", flag))) %>%
+        addLayersControl(overlayGroups=~paste0('<span style="color: ', pal(flag), '">', flag, '</span>'), position="topright",
+            options = layersControlOptions(collapsed = FALSE))
   })
 
   observeEvent(input$prev_day, {

@@ -20,6 +20,14 @@ body, label, input, button, select {
 }
 h1, h2, h3, h4 { font-weight: 400; }
 
+.leaflet-control-layers {
+  /* Dark color so flag colors are visible */
+  background-color: #1f1544;
+}
+.leaflet-control-layers label span {
+  font-weight: bold;
+}
+
 #controls {
   /* Appearance */
   background-color: white;
