@@ -55,7 +55,10 @@ function(input, output, session) {
     leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
       addTiles(
         urlTemplate = "//server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        attribution = '<a href="http://www.esri.com/">Esri</a> i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+        attribution = paste(
+            '<a href="http://www.esri.com/">Esri</a> i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            '<a href="http://globalfishingwatch.org">Global Fishing Watch</a>',
+            sep = ' | ')
       ) %>%
       setView(lng = -21.88, lat = -2.00, zoom = 4)
   })
