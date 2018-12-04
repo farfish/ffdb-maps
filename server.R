@@ -51,6 +51,11 @@ function(input, output, session) {
       # TODO: input$MAPID_zoom is an integer that indicates the zoom level.
   })
 
+  full_pal <- rep(c(brewer.pal(12, "Paired"),
+                    brewer.pal(9, "Set1"),
+                    brewer.pal(8, "Set2"),
+                    brewer.pal(12, "Set3")), 10)
+
   output$map <- renderLeaflet({
     leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
       addTiles(
@@ -65,11 +70,7 @@ function(input, output, session) {
 
   observe({
     ve <- visible_effort()
-    pal <- rep(c(brewer.pal(12, "Paired"),
-                 brewer.pal(9, "Set1"),
-                 brewer.pal(8, "Set2"),
-                 brewer.pal(12, "Set3")), 10)
-    pal <- colorFactor(pal, ve$flag)
+    pal <- colorFactor(full_pal, ve$flag)
 
     leafletProxy("map", data = ve) %>%
         clearMarkers() %>%
