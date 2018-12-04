@@ -22,7 +22,7 @@ navbarPage("FFDB maps", id="nav",
       leafletOutput("map", width="100%", height="100%"),
 
       absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
-        draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
+        draggable = TRUE, top = 65, left = 10, right = "auto", bottom = "auto",
         width = 330, height = "auto",
 
         h2("Fishing effort by flag"),
