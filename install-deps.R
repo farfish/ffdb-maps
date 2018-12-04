@@ -4,4 +4,5 @@ if (!require(leaflet))
     devtools::install_github("rstudio/leaflet")
 
 # Develpoment dependencies
-install.packages('unittest')
+if (!require(unittest))
+    install.packages('unittest')
