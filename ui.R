@@ -37,7 +37,10 @@ navbarPage("FFDB maps", id="nav",
             "date_end", "End Date",
             min = "2012-01-01",
             max = "2016-12-31",
-            value = "2015-01-01")
+            value = "2015-01-01"),
+
+        actionButton("prev_day", "Prev"),
+        actionButton("next_day", "Next", class = 'float-right')
 
       )
     )

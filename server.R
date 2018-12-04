@@ -75,4 +75,14 @@ function(input, output, session) {
         addLegend("bottomleft", pal=pal, values=~flag, title="Flag",
             layerId="colorLegend")
   })
+
+  observeEvent(input$prev_day, {
+      updateDateInput(session, "date_start", value = as.Date(input$date_start, format='%Y-%m-%d') - 1)
+      updateDateInput(session, "date_end", value = as.Date(input$date_end, format='%Y-%m-%d') - 1)
+  })
+
+  observeEvent(input$next_day, {
+      updateDateInput(session, "date_start", value = as.Date(input$date_start, format='%Y-%m-%d') + 1)
+      updateDateInput(session, "date_end", value = as.Date(input$date_end, format='%Y-%m-%d') + 1)
+  })
 }
