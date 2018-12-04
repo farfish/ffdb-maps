@@ -69,7 +69,7 @@ function(input, output, session) {
     leafletProxy("map", data = ve) %>%
         clearMarkers() %>%
         addCircleMarkers(~lon_bin, ~lat_bin, radius=~fishing_hours, group=~paste0('<span style="color: ', pal(flag), '">', flag, '</span>'),
-            stroke=FALSE, fillOpacity=~day_ratio, fillColor=~pal(flag), popup=~flag,
+            stroke=FALSE, fillOpacity=~day_ratio, fillColor=~pal(flag), popup=~paste0('Flag: ', flag),
             options = pathOptions(className=~paste0("flag-", flag))) %>%
         addLayersControl(overlayGroups=~paste0('<span style="color: ', pal(flag), '">', flag, '</span>'), position="topright",
             options = layersControlOptions(collapsed = FALSE))
