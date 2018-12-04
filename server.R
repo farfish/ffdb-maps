@@ -11,8 +11,11 @@ read_fleet_metadata <- function (csv_path = 'fishing_effort/fishing_vessels') {
 fleet_metadata <- read_fleet_metadata()
 
 read_fishing_effort <- function (date_start, date_end = date_start, csv_path = 'fishing_effort/fishing_effort_byvessel/daily_csvs') {
+    date_start <- as.Date(date_start)
+    date_end <- as.Date(date_end)
+
     # Make file paths for every day in given range
-    file_paths <- paste0(csv_path, '/', format(seq(as.Date(date_start), as.Date(date_end), 1), '%Y-%m-%d'), '.csv')
+    file_paths <- paste0(csv_path, '/', format(seq(date_start, date_end, 1), '%Y-%m-%d'), '.csv')
     # Fetch them all, bind results together
     effort <- do.call("rbind", lapply(file_paths, read.csv))
 
@@ -22,6 +25,13 @@ read_fishing_effort <- function (date_start, date_end = date_start, csv_path = '
 
     # join on flag information
     effort$flag <- fleet_metadata[match(effort$mmsi, fleet_metadata$mmsi), c('flag')]
+
+    # Scale the day the data point is on as an opacity
+    days_total <- as.numeric(date_end - date_start)
+    opacity_scale <- ifelse(days_total < 5, 0.4, 0.1)
+    effort$day_ratio <- as.numeric(as.Date(effort$date, format='%Y-%m-%d') - date_start)
+    # Scale ratio opacity_scale..1
+    effort$day_ratio <- ((effort$day_ratio  / days_total) * (1 - opacity_scale)) + opacity_scale
 
     return(effort)
 }
@@ -55,9 +65,9 @@ function(input, output, session) {
     pal <- colorFactor("inferno", ve$flag)
 
     leafletProxy("map", data = ve) %>%
-        clearShapes() %>%
+        clearMarkers() %>%
         addCircleMarkers(~lon_bin, ~lat_bin, radius=~fishing_hours,
-            stroke=FALSE, fillOpacity=0.8, fillColor=pal(ve$flag)) %>%
+            stroke=FALSE, fillOpacity=~day_ratio, fillColor=pal(ve$flag)) %>%
         addLegend("bottomleft", pal=pal, values=~flag, title="Flag",
             layerId="colorLegend")
   })
