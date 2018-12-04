@@ -5,12 +5,12 @@ library(lattice)
 library(dplyr)
 
 
-read_fleet_metadata <- function (csv_path = 'fishing_effort/fishing_vessels') {
+read_fleet_metadata <- function (csv_path = 'gfw_data/fishing_vessels') {
     read.csv(paste0(csv_path, '/', 'fishing_vessels.csv'))
 }
 fleet_metadata <- read_fleet_metadata()
 
-read_fishing_effort <- function (date_start, date_end = date_start, csv_path = 'fishing_effort/fishing_effort_byvessel/daily_csvs') {
+read_fishing_effort <- function (date_start, date_end = date_start, csv_path = 'gfw_data/fishing_effort_byvessel/daily_csvs') {
     date_start <- as.Date(date_start)
     date_end <- as.Date(date_end)
 
