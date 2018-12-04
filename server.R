@@ -52,19 +52,13 @@ function(input, output, session) {
   })
 
   full_pal <- rep(c(brewer.pal(12, "Paired"),
-                    brewer.pal(9, "Set1"),
-                    brewer.pal(8, "Set2"),
-                    brewer.pal(12, "Set3")), 10)
+                    brewer.pal(9, "Dark2"),
+                    brewer.pal(12, "Set1")), 10)
 
   output$map <- renderLeaflet({
     leaflet(options = leafletOptions(zoomControl = TRUE)) %>%
-      addTiles(
-        urlTemplate = "//server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        attribution = paste(
-            '<a href="http://www.esri.com/">Esri</a> i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-            '<a href="http://globalfishingwatch.org">Global Fishing Watch</a>',
-            sep = ' | ')
-      ) %>%
+      addProviderTiles("Esri.OceanBasemap") %>%
+      addTiles(urlTemplate = "", attribution = '<a href="http://globalfishingwatch.org">Global Fishing Watch</a>') %>%
       setView(lng = -21.88, lat = -2.00, zoom = 4)
   })
 
