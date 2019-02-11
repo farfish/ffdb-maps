@@ -9,7 +9,9 @@ navbarPage("FFDB maps", id="nav",
         draggable = TRUE, top = "auto", left = 20, right = "auto", bottom = "0",
         width = 200, height = "auto",
 
-        br(),
+        radioButtons("plot_type", "Plot type", c(
+            "Fishing hours" = "fishing_hours",
+            "Hours per Tonnage" = "hours_per_tonnage")),
         dateInput(
             "date_start", "Start Date",
             min = "2012-01-01",

@@ -25,6 +25,7 @@ read_fishing_effort <- function (date_start, date_end = date_start, csv_path = '
 
     # join on flag information
     effort$flag <- fleet_metadata[match(effort$mmsi, fleet_metadata$mmsi), c('flag')]
+    effort$tonnage <- fleet_metadata[match(effort$mmsi, fleet_metadata$mmsi), c('tonnage')]
 
     # Scale the day the data point is on as an opacity
     days_total <- as.numeric(date_end - date_start)
@@ -64,11 +65,17 @@ function(input, output, session) {
 
   observe({
     ve <- visible_effort()
+
+    if (input$plot_type == 'hours_per_tonnage') {
+        ve$radius <- (ve$fishing_hours / ve$tonnage) * 10
+    } else {
+        ve$radius <- ve[,input$plot_type]  # Select column to use as radius
+    }
     pal <- colorFactor(full_pal, ve$flag)
 
     leafletProxy("map", data = ve) %>%
         clearMarkers() %>%
-        addCircleMarkers(~lon_bin, ~lat_bin, radius=~fishing_hours, group=~paste0('<span style="color: ', pal(flag), '">', flag, '</span>'),
+        addCircleMarkers(~lon_bin, ~lat_bin, radius=~radius, group=~paste0('<span style="color: ', pal(flag), '">', flag, '</span>'),
             stroke=FALSE, fillOpacity=~day_ratio, fillColor=~pal(flag), popup=~paste0('Flag: ', flag),
             options = pathOptions(className=~paste0("flag-", flag))) %>%
         addLayersControl(overlayGroups=~paste0('<span style="color: ', pal(flag), '">', flag, '</span>'), position="topright",
@@ -87,7 +94,7 @@ function(input, output, session) {
 
   output$download_data <- downloadHandler(
       filename = function() {
-          paste("data.csv", sep="")
+          paste(input$plot_type, ".csv", sep="")
       },
       content = function(file) {
           write.csv(visible_effort(), file)
