@@ -84,4 +84,14 @@ function(input, output, session) {
       updateDateInput(session, "date_start", value = as.Date(input$date_start, format='%Y-%m-%d') + 1)
       updateDateInput(session, "date_end", value = as.Date(input$date_end, format='%Y-%m-%d') + 1)
   })
+
+  output$download_data <- downloadHandler(
+      filename = function() {
+          paste("data.csv", sep="")
+      },
+      content = function(file) {
+          write.csv(visible_effort(), file)
+      }
+  )
+
 }

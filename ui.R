@@ -15,6 +15,7 @@ navbarPage("FFDB maps", id="nav",
         draggable = TRUE, top = "auto", left = 20, right = "auto", bottom = "0",
         width = 200, height = "auto",
 
+        br(),
         dateInput(
             "date_start", "Start Date",
             min = "2012-01-01",
@@ -28,7 +29,10 @@ navbarPage("FFDB maps", id="nav",
             value = "2015-01-03"),
 
         actionButton("prev_day", "Prev"),
-        actionButton("next_day", "Next", class = 'float-right')
+        actionButton("next_day", "Next", class = 'float-right'),
+        br(),
+        br(),
+        downloadButton("download_data", "Download raw data")
 
       )
     )
