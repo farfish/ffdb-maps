@@ -39,8 +39,12 @@ read_fishing_effort <- function (date_start, date_end = date_start, csv_path = '
 
 function(input, output, session) {
 
+  selected_effort <- reactive({
+      # Read selected date range from files
+      read_fishing_effort(input$date_start, input$date_end)
+  })
   visible_effort <- reactive({
-      effort <- read_fishing_effort(input$date_start, input$date_end)  # TODO: Cache?
+      effort <- selected_effort()
 
       # Return all effort that's currently on-screen
       bounds <- input$map_bounds
