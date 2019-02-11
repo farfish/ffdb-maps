@@ -1,13 +1,7 @@
 library(leaflet)
 
 navbarPage("FFDB maps", id="nav",
-
-  tabPanel("Fishing effort by flag",
-    tags$head(
-      # Include our custom CSS
-      includeCSS("styles.css")
-    ),
-
+  tabPanel("GFW data",
     div(class="outer",
       leafletOutput("map", width="100%", height="100%"),
 
@@ -38,5 +32,9 @@ navbarPage("FFDB maps", id="nav",
     )
   ),
 
+  header = tags$head(
+      # Include our custom CSS
+      includeCSS("styles.css")
+  ),
   conditionalPanel("false", icon("crosshair"))
 )
