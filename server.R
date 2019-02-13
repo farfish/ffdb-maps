@@ -71,7 +71,7 @@ function(input, output, session) {
     ve <- visible_effort()
 
     if (input$plot_type == 'hours_per_tonnage') {
-        ve$radius <- (ve$fishing_hours / ve$tonnage) * 10
+        ve$radius <- (ve$fishing_hours / ve$tonnage) * 100
     } else {
         ve$radius <- ve[,input$plot_type]  # Select column to use as radius
     }
