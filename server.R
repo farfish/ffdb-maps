@@ -26,6 +26,7 @@ read_fishing_effort <- function (date_start, date_end = date_start, csv_path = '
     # join on flag information
     effort$flag <- fleet_metadata[match(effort$mmsi, fleet_metadata$mmsi), c('flag')]
     effort$tonnage <- fleet_metadata[match(effort$mmsi, fleet_metadata$mmsi), c('tonnage')]
+    effort$engine_power <- fleet_metadata[match(effort$mmsi, fleet_metadata$mmsi), c('engine_power')]
 
     # Scale the day the data point is on as an opacity
     days_total <- as.numeric(date_end - date_start)
@@ -72,6 +73,8 @@ function(input, output, session) {
 
     if (input$plot_type == 'hours_per_tonnage') {
         ve$radius <- (ve$fishing_hours / ve$tonnage) * 100
+    } else if (input$plot_type == 'hours_per_engine_power') {
+        ve$radius <- (ve$fishing_hours / ve$engine_power) * 100
     } else {
         ve$radius <- ve[,input$plot_type]  # Select column to use as radius
     }

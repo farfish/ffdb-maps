@@ -11,6 +11,7 @@ navbarPage("FFDB maps", id="nav",
 
         radioButtons("plot_type", "Plot type", c(
             "Fishing hours" = "fishing_hours",
+            "Hours per Engine Power" = "hours_per_engine_power",
             "Hours per Tonnage" = "hours_per_tonnage")),
         dateInput(
             "date_start", "Start Date",
