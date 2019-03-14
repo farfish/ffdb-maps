@@ -22,6 +22,19 @@ Symlink this directory into the shiny server root, for example:
 
     ln -rs . /srv/shiny-server/ffdb-maps
 
+## Data download
+
+This application requires the ``fishing_vessels`` and ``fishing_effort_byvessel`` datasets, these can be downloaded from
+[globalfishingwatch](https://globalfishingwatch.force.com/gfw/s/data-download).
+
+Both of these should be uncompressed into the ``gfw_data`` directory. There is a helper script, [update-data.sh](update-data.sh)
+to help with this.
+
+More information on the datasets:
+
+* https://github.com/GlobalFishingWatch/paper-global-footprint-of-fisheries/blob/master/data_documentation/fishing_vessels.md
+* https://github.com/GlobalFishingWatch/paper-global-footprint-of-fisheries/blob/master/data_documentation/fishing_effort_byvessel.md
+
 ## Authors
 
 * [Jamie Lentin](https://github.com/lentinj) - jamie.lentin@shuttlethread.com
